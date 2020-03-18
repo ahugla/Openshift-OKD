@@ -91,3 +91,7 @@ oc cluster up
 
 
 
+
+
+#  https://raw.githubusercontent.com/ahugla/Openshift-OKD/master/script-install-OKD-3.11.sh
+
