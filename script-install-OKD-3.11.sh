@@ -8,7 +8,7 @@
 
 cd /tmp
 
-systemtl start firewalld
+systemctl start firewalld
 
 
 yum -y update
