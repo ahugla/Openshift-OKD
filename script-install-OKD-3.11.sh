@@ -4,7 +4,11 @@
 #
 
 
+
+
 cd /tmp
+
+systemtl start firewalld
 
 
 yum -y update
@@ -54,12 +58,12 @@ sysctl -p
 
 
 # Ensure that your firewall allows containers access to the OpenShift master API (8443/tcp) and DNS (53/udp) endpoints.
-#DOCKER_BRIDGE=`docker network inspect -f "{{range .IPAM.Config }}{{ .Subnet }}{{end}}" bridge`
-#firewall-cmd --permanent --new-zone dockerc
-#firewall-cmd --permanent --zone dockerc --add-source $DOCKER_BRIDGE
-#firewall-cmd --permanent --zone dockerc --add-port={80,443,8443}/tcp
-#firewall-cmd --permanent --zone dockerc --add-port={53,8053}/udp
-#firewall-cmd --reload
+DOCKER_BRIDGE=`docker network inspect -f "{{range .IPAM.Config }}{{ .Subnet }}{{end}}" bridge`
+firewall-cmd --permanent --new-zone dockerc
+firewall-cmd --permanent --zone dockerc --add-source $DOCKER_BRIDGE
+firewall-cmd --permanent --zone dockerc --add-port={80,443,8443}/tcp
+firewall-cmd --permanent --zone dockerc --add-port={53,8053}/udp
+firewall-cmd --reload
 
 
 
