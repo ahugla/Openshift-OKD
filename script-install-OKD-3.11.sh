@@ -9,7 +9,6 @@
 
 cd /opt
 
-#systemctl start firewalld
 
 
 yum -y update
@@ -23,9 +22,11 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum install -y  docker-ce docker-ce-cli containerd.io
 
 
+# Inutile car en root
 # Add your standard user account to docker group
-usermod -aG docker $USER
-newgrp docker  # permet de changer l'identifiant de groupe de l'utilisateur au cours de session
+#usermod -aG docker $USER
+#newgrp docker  # permet de changer l'identifiant de groupe de l'utilisateur au cours de session
+
 
 
 # Configure the Docker daemon with an insecure registry parameter of 172.30.0.0/16
@@ -54,7 +55,7 @@ systemctl enable docker
 
 
 # Enable IP forwarding on your system
-echo "net.ipv4.ip_forward = 1" | sudo tee -a /etc/sysctl.conf
+echo "net.ipv4.ip_forward = 1" | tee -a /etc/sysctl.conf
 sysctl -p
 
 
@@ -87,24 +88,31 @@ oc version
 # This behavior can be changed by adding special parameters, such as --public-hostname=
 # A public hostname can also be specified for the server with the --public-hostname flag.
 
-##oc cluster up --public-hostname=vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com --routing-suffix='cpod-vrealizesuite.az-demo.shwrfr.com'
-##oc cluster up --public-hostname=vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com --routing-suffix='services.cpod-vrealizesuite.az-demo.shwrfr.com'
 
-# Bootstrap a local single server OpenShift Origin cluster 
+oc cluster up --public-hostname=$HOSTNAME.cpod-vrealizesuite.az-demo.shwrfr.com  # installe et configure K8S puis Openshift
+
+# on remplate 127.0.0.1 dans le fichier de config par l ip de la VM
+my_ip=$(hostname  -I | cut -f1 -d' ')
+configfile="/opt/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/openshift.local.clusterup/openshift-controller-manager/openshift-master.kubeconfig"
+
+sed -i -e 's/127.0.0.1/'"$my_ip"'/g'  $configfile
+
+
+
+#  ACCES:  https://[VM].cpod-vrealizesuite.az-demo.shwrfr.com:8443/console   
+#  Compte:  admin/12345
+ 
+
+
+# oc cluster up : Bootstrap a local single server OpenShift Origin cluster 
 #    Start OKD Cluster listening on the local interface – 127.0.0.1:8443
 #    Start a web console listening on all interfaces at /console (127.0.0.1:8443).
 #    Launch Kubernetes system components.
 #    Provisions registry, router, initial templates, and a default project.
 #    The OpenShift cluster will run as an all-in-one container on a Docker host.
 # 
-# oc cluster up --public-hostname=okd.example.com --routing-suffix='services.example.com'
-# oc cluster up --public-hostname=vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com --routing-suffix='vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com'
+# ex oc cluster up --public-hostname=vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com --routing-suffix='vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com'
 
-
-
-# xip.io is a magic domain name that provides wildcard DNS for any IP address.
-#  =>  https://okd.example.com:8443/console/
-# The OpenShift Origin cluster configuration files will be located inside the 'openshift.local.clusterup/' directory.
 
 
 # Useful
@@ -123,7 +131,11 @@ oc version
 # DO NO KEEP
 # ---------
 #
-# https://raw.githubusercontent.com/ahugla/Openshift-OKD/master/script-install-OKD-3.11.sh
+# wget https://raw.githubusercontent.com/ahugla/Openshift-OKD/master/script-install-OKD-3.11.sh
 
-# https://vra-000739.cpod-vrealizesuite.az-demo.shwrfr.com:8443
+# https://vra-000741.cpod-vrealizesuite.az-demo.shwrfr.com:8443
 # https://172.19.2.215:8443
+
+
+
+
