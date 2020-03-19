@@ -90,6 +90,14 @@ oc version
 
 oc cluster up --public-hostname=$HOSTNAME
 
+
+#########################################   METTRE A JOUR LE BON TRUC  ####################
+my_ip=$(hostname  -I | cut -f1 -d' ')
+configfile="/opt/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/openshift.local.clusterup/openshift-controller-manager/openshift-master.kubeconfig"
+sed -i -e 's/server: https:\/\/127.0.0.1:8443/server: https:\/\/'"$my_ip"'/g'  $configfile
+
+
+
 kubectl config use-context myproject/127-0-0-1:8443/developer
 
 
@@ -144,6 +152,5 @@ kubectl config use-context myproject/127-0-0-1:8443/developer
 # chmod 755 /tmp/Openshift-OKD/script-install-OKD-3.11.sh
 
 # git pull
-
 
 
