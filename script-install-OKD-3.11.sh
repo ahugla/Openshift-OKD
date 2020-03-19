@@ -22,7 +22,7 @@ yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce
 yum install -y  docker-ce docker-ce-cli containerd.io
 
 
-# Inutile car en root
+# Inutile car root ?
 # Add your standard user account to docker group
 #usermod -aG docker $USER
 #newgrp docker  # permet de changer l'identifiant de groupe de l'utilisateur au cours de session
@@ -133,9 +133,12 @@ sed -i -e 's/127.0.0.1/'"$my_ip"'/g'  $configfile
 #
 # wget https://raw.githubusercontent.com/ahugla/Openshift-OKD/master/script-install-OKD-3.11.sh
 
-# https://vra-000741.cpod-vrealizesuite.az-demo.shwrfr.com:8443
+# https://vra-000745.cpod-vrealizesuite.az-demo.shwrfr.com:8443/console
 # https://172.19.2.215:8443
 
+
+# git clone https://github.com/ahugla/Openshift-OKD
+# git pull
 
 
 
