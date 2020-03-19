@@ -10,8 +10,7 @@
 cd /opt
 
 
-
-yum -y update
+#yum -y update
 yum install -y wget
 
 
@@ -89,13 +88,15 @@ oc version
 # A public hostname can also be specified for the server with the --public-hostname flag.
 
 
-oc cluster up --public-hostname=$HOSTNAME.cpod-vrealizesuite.az-demo.shwrfr.com  # installe et configure K8S puis Openshift
+oc cluster up --public-hostname=$HOSTNAME
+
+kubectl config use-context myproject/127-0-0-1:8443/developer
+
 
 # on remplate 127.0.0.1 dans le fichier de config par l ip de la VM
-my_ip=$(hostname  -I | cut -f1 -d' ')
-configfile="/opt/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/openshift.local.clusterup/openshift-controller-manager/openshift-master.kubeconfig"
-
-sed -i -e 's/127.0.0.1/'"$my_ip"'/g'  $configfile
+#my_ip=$(hostname  -I | cut -f1 -d' ')
+#configfile="/opt/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/openshift.local.clusterup/openshift-controller-manager/openshift-master.kubeconfig"
+#sed -i -e 's/127.0.0.1/'"$my_ip"'/g'  $configfile
 
 
 
@@ -133,11 +134,15 @@ sed -i -e 's/127.0.0.1/'"$my_ip"'/g'  $configfile
 #
 # wget https://raw.githubusercontent.com/ahugla/Openshift-OKD/master/script-install-OKD-3.11.sh
 
-# https://vra-000745.cpod-vrealizesuite.az-demo.shwrfr.com:8443/console
+# https://vra-000747.cpod-vrealizesuite.az-demo.shwrfr.com:8443/console
 # https://172.19.2.215:8443
 
 
+
+# cd /tmp
 # git clone https://github.com/ahugla/Openshift-OKD
+# chmod 755 /tmp/Openshift-OKD/script-install-OKD-3.11.sh
+
 # git pull
 
 
