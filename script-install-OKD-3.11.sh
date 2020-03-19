@@ -91,13 +91,13 @@ oc version
 oc cluster up --public-hostname=$HOSTNAME
 
 
-#########################################   METTRE A JOUR LE BON TRUC  ####################
+# On remplace dans le fichier kubeconfig  127.0.0.1 par l'ip de la VM
 my_ip=$(hostname  -I | cut -f1 -d' ')
 configfile="/opt/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit/openshift.local.clusterup/openshift-controller-manager/openshift-master.kubeconfig"
 sed -i -e 's/server: https:\/\/127.0.0.1:8443/server: https:\/\/'"$my_ip"'/g'  $configfile
 
 
-
+# On recharge la config
 kubectl config use-context myproject/127-0-0-1:8443/developer
 
 
