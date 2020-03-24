@@ -56,7 +56,7 @@ EOF
 systemctl restart docker
 
 
-oc cluster up --public-hostname=$HOSTNAME
+#oc cluster up --public-hostname=$HOSTNAME
 
 # INDISPENSABLE pour donner les droits à "admin" d'acceder a Openshift depuis CAS (via API)
 #oc adm policy add-cluster-role-to-user cluster-admin admin --rolebinding-name=cluster-admins
