@@ -12,10 +12,6 @@
 #    To login as administrator:  oc login -u system:admin
 
 
-# Parameters
-my_domain=cpod-vrealizesuite.az-demo.shwrfr.com
-
-
 # ENABLE SELINUX
 setenforce 0    # Set to permissive mode        setenforce 1 = Set to enforcing mode.
 sed -i --follow-symlinks 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux && cat /etc/sysconfig/selinux
@@ -33,9 +29,8 @@ git checkout remotes/origin/release-3.11
 
 
 # replace 'localhost' by the FQDN in the inventory file
-my_fqdn=$HOSTNAME.$my_domain
-#echo $my_fqdn
-sed -i -e 's/localhost/'"$my_fqdn"'/g'  /opt/openshift-ansible/inventory/hosts.localhost
+# $HOSTNAME = NAME.DOMAIN.COM
+sed -i -e 's/localhost/'"$HOSTNAME"'/g'  /opt/openshift-ansible/inventory/hosts.localhost
 
 
 # run playbooks
