@@ -33,9 +33,11 @@ git checkout remotes/origin/release-3.11
 sed -i -e 's/localhost/'"$HOSTNAME"'/g'  /opt/openshift-ansible/inventory/hosts.localhost
 
 
+
 # run playbooks
-sudo ansible-playbook -i inventory/hosts.localhost playbooks/prerequisites.yml
-sudo ansible-playbook -i inventory/hosts.localhost playbooks/deploy_cluster.yml
+cd openshift-ansible
+ansible-playbook -i inventory/hosts.localhost playbooks/prerequisites.yml
+ansible-playbook -i inventory/hosts.localhost playbooks/deploy_cluster.yml
 
 
 # Configure the Docker daemon with an insecure registry parameter of 172.30.0.0/16
