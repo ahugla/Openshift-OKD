@@ -1,0 +1,35 @@
+[masters]
+master.mydomain.local
+
+[new_masters]
+
+[etcd]
+master01.mydomain.local
+
+[nodes]
+master.mydomain.local openshift_node_group_name="node-config-master"
+infra.mydomain.local openshift_node_group_name="node-config-infra"
+compute.mydomain.local openshift_node_group_name="node-config-compute"
+
+[new_nodes]
+
+[OSEv3:children]
+masters
+nodes
+etcd
+new_nodes
+new_masters
+
+[OSEv3:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_user=root
+openshift_deployment_type=origin
+openshift_release="3.11"
+debug_level=4
+openshift_docker_insecure_registries=172.30.0.0/16
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider'}]
+osm_use_cockpit=true
+osm_cockpit_plugins=['cockpit-kubernetes']
+openshift_pkg_version=-3.11.1
+os_firewall_use_firewalld=True
+openshift_disable_check=memory_availability
