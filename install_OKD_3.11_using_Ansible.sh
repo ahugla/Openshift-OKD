@@ -12,10 +12,14 @@
 #    To login as administrator:  oc login -u system:admin
 
 
-# ENABLE SELINUX
+# ENABLE SELINUX MUST BE ENABLE (Not Disabled state)  =>  REBOOT required
 setenforce 0    # Set to permissive mode        setenforce 1 = Set to enforcing mode.
 sed -i --follow-symlinks 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux && cat /etc/sysconfig/selinux
+ # =>  REBOOT required
 
+
+
+ 
 # install prerequisites
 yum install -y ansible pyOpenSSL python-cryptography python-lxml git
 
@@ -36,8 +40,8 @@ sed -i -e 's/localhost/'"$HOSTNAME"'/g'  /opt/openshift-ansible/inventory/hosts.
 
 # run playbooks
 cd openshift-ansible
-ansible-playbook -i openshift-ansible/inventory/hosts.localhost playbooks/prerequisites.yml
-ansible-playbook -i openshift-ansible/inventory/hosts.localhost playbooks/deploy_cluster.yml
+ansible-playbook -vvv -i inventory/hosts.localhost playbooks/prerequisites.yml
+ansible-playbook -vvv -i inventory/hosts.localhost playbooks/deploy_cluster.yml
 
 
 # Configure the Docker daemon with an insecure registry parameter of 172.30.0.0/16
