@@ -36,8 +36,8 @@ sed -i -e 's/localhost/'"$HOSTNAME"'/g'  /opt/openshift-ansible/inventory/hosts.
 
 # run playbooks
 cd openshift-ansible
-ansible-playbook -i inventory/hosts.localhost playbooks/prerequisites.yml
-ansible-playbook -i inventory/hosts.localhost playbooks/deploy_cluster.yml
+ansible-playbook -i openshift-ansible/inventory/hosts.localhost playbooks/prerequisites.yml
+ansible-playbook -i openshift-ansible/inventory/hosts.localhost playbooks/deploy_cluster.yml
 
 
 # Configure the Docker daemon with an insecure registry parameter of 172.30.0.0/16
