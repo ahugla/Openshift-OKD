@@ -1,15 +1,18 @@
+
+
 [masters]
 master.mydomain.local
+# other1.example.com   ansible_connection=ssh  ansible_user=alex
 
 [new_masters]
 
 [etcd]
-master01.mydomain.local
+master.mydomain.local
+# other2.example.com   ansible_connection=ssh  ansible_user=alex
 
 [nodes]
-master.mydomain.local openshift_node_group_name="node-config-master"
-infra.mydomain.local openshift_node_group_name="node-config-infra"
-compute.mydomain.local openshift_node_group_name="node-config-compute"
+master.mydomain.local  openshift_node_group_name="node-config-all-in-one"
+
 
 [new_nodes]
 

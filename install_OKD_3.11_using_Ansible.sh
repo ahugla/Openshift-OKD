@@ -12,6 +12,16 @@
 #    To login as administrator:  oc login -u system:admin
 
 
+# Parameters
+my_domain=cpod-vrealizesuite.az-demo.shwrfr.com
+
+
+# replace 'localhost' by the FQDN in the inventory file
+my_fqdn=$HOSTNAME.$my_domain
+#echo $my_fqdn
+sed -i -e 's/localhost/'"$my_fqdn"'/g'  /opt/openshift-ansible/inventory/hosts.localhost
+
+
 # ENABLE SELINUX
 setenforce 0    # Set to permissive mode        setenforce 1 = Set to enforcing mode.
 sed -i --follow-symlinks 's/^SELINUX=.*/SELINUX=permissive/g' /etc/sysconfig/selinux && cat /etc/sysconfig/selinux
@@ -31,10 +41,10 @@ sudo ansible-playbook -i inventory/hosts.localhost playbooks/prerequisites.yml
 sudo ansible-playbook -i inventory/hosts.localhost playbooks/deploy_cluster.yml
 
 
-oc cluster up --public-hostname=$HOSTNAME
+#oc cluster up --public-hostname=$HOSTNAME
 
 # INDISPENSABLE pour donner les droits à "admin" d'acceder a Openshift depuis CAS (via API)
-oc adm policy add-cluster-role-to-user cluster-admin admin --rolebinding-name=cluster-admins
+#oc adm policy add-cluster-role-to-user cluster-admin admin --rolebinding-name=cluster-admins
 
 
 #  https://IP:8443/console
