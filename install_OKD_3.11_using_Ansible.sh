@@ -39,7 +39,6 @@ sed -i -e 's/localhost/'"$HOSTNAME"'/g'  /opt/openshift-ansible/inventory/hosts.
 
 
 # run playbooks
-cd openshift-ansible
 ansible-playbook -vvv -i inventory/hosts.localhost playbooks/prerequisites.yml
 ansible-playbook -vvv -i inventory/hosts.localhost playbooks/deploy_cluster.yml
 
@@ -65,6 +64,8 @@ systemctl restart docker
 # INDISPENSABLE pour donner les droits à "admin" d'acceder a Openshift depuis CAS (via API)
 #oc adm policy add-cluster-role-to-user cluster-admin admin --rolebinding-name=cluster-admins
 
+# eviter le redemarrage auto
+# systemctl disable origin-node.service    =>  evite que ca redemarre automatiquement apres un reboot ou apres "oc cluster down"
 
 #  https://IP:8443/console
 #  ex : https://vra-000765.cpod-vrealizesuite.az-demo.shwrfr.com:8443/console/catalog
